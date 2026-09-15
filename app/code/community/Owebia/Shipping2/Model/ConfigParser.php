@@ -56,11 +56,16 @@ class Owebia_Shipping2_Model_ConfigParser
 
     public static function getInfos()
     {
+        $memoryLimit = ini_get('memory_limit');
+        $memoryLimit = ($memoryLimit !== false && (int) $memoryLimit > 0)
+            ? self::formatSize(self::parseSize($memoryLimit))
+            : 'unlimited';
+
         $properties = array(
             'server_os' => PHP_OS,
             'server_software' => $_SERVER['SERVER_SOFTWARE'],
             'php_version' => PHP_VERSION,
-            'memory_limit' => self::formatSize(self::parseSize(ini_get('memory_limit'))),
+            'memory_limit' => $memoryLimit,
             'memory_usage' => self::formatSize(memory_get_usage(true)),
         );
         return $properties;
@@ -1231,7 +1236,7 @@ class Owebia_Shipping2_Model_ConfigParser
 
     protected function getChar($charCode)
     {
-        return utf8_encode(chr($charCode));
+        return mb_convert_encoding(chr($charCode), 'UTF-8', 'Windows-1252');
     }
 
     protected function _parseInputPrepareInput($input)

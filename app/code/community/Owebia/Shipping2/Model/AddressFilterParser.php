@@ -6,6 +6,9 @@
 
 class Owebia_Shipping2_Model_AddressFilterParser
 {
+    protected $current = array();
+    protected $length = 0;
+
     protected $_configParser;
     protected $_input = null;
     protected $_position = null;
