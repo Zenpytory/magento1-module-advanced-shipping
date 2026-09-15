@@ -6,7 +6,7 @@
 
 class Owebia_Shipping2_Controller_Abstract extends Mage_Adminhtml_Controller_Action
 {
-    protected function _isAllowed()
+    protected function _isAllowed(): bool
     {
         return Mage::getSingleton('admin/session')->isAllowed('admin');
     }
